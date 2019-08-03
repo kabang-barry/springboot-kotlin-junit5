@@ -7,6 +7,8 @@ import com.jeonguk.web.exception.BadRequestException
 import com.jeonguk.web.exception.ResourceNotFoundException
 import com.jeonguk.web.repository.AuthorRepository
 import com.jeonguk.web.repository.BookRepository
+import com.jeonguk.web.util.PageDto
+import com.jeonguk.web.util.PaginationDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -26,12 +28,33 @@ class BookService {
     @Autowired
     private lateinit var bookRepository: BookRepository
 
-    @Transactional
+    /**
+     * 읽기전용 트랜잭션(read-only, readOnly)
+     *
+     * 트랜잭션을 읽기 전용으로 설정할 수 있다.
+     * 성능을 최적화하기 위해 사용할 수도 있고 특정 트랜잭션 작업 안에서 쓰기 작업이 일어나는 것을
+     * 의도적으로 방지하기 위해 사용할 수도 있다.
+     * 트랜잭션을 준비하면서 읽기 전용 속성이 트랜잭션 매니저에게 전달된다.
+     * 그에 따라 트랜잭션 매니저가 적절한 작업을 수행한다.
+     * 그런데 일부 트랜잭션 매니저의 경우 읽기전용 속성을 무시하고 쓰기 작업을 허용할 수도 있기 때문에 주의해야 한다.
+     * 일반적으로 읽기 전용 트랜잭션이 시작된 이후 INSERT, UPDATE, DELETE 같은 쓰기 작업이 진행되면 예외가 발생한다.
+     * aop/tx 스키마로 트랜잭션 선언을 할 때는 이름 패턴을 이용해 읽기 전용 속성으로 만드는 경우가 많다.
+     * 보통 get이나 find 같은 이름의 메소드를 모두 읽기전용으로 만들어 사용하면 편리하다.
+     * @Transactional 의 경우는 각 메소드에 일일이 읽기 전용 지정을 해줘야 한다.
+     * read-only 애트리뷰트 또는 readOnly 앨리먼트로 지정한다.
+     */
+    @Transactional(readOnly = true)
     fun getBook(id: Long): BookDto {
         return bookRepository.findById(id)
                 .map { BookDtoConverter.convert(it) }
                 .orElse(null)
                 ?: throw ResourceNotFoundException("Book $id does not exist")
+    }
+
+    @Transactional(readOnly = true)
+    fun getBooks(pagination: PaginationDto): PageDto<BookDto> {
+        val page = bookRepository.findAll(pagination.toPageable())
+        return BookDtoConverter.convert(page)
     }
 
     @Transactional
