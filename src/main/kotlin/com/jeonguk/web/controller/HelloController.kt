@@ -1,19 +1,23 @@
 package com.jeonguk.web.controller
 
 import com.jeonguk.web.domain.dto.Hello
+import com.jeonguk.web.service.HelloService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.concurrent.atomic.AtomicLong
 
 @RestController
-@RequestMapping("/api/hello")
-class HelloController {
+@RequestMapping("/api")
+class HelloController(
+        @Autowired private val helloService: HelloService
+) {
 
-    val counter = AtomicLong()
+    @GetMapping("/hello/{name}")
+    fun greeting(@PathVariable("name") name: String): Hello = Hello(1L, "Hello, $name")
 
-    @GetMapping("/{name}")
-    fun greeting(@PathVariable("name") name: String): Hello = Hello(counter.incrementAndGet(), "Hello, $name")
+    @GetMapping("/name/{name}")
+    fun hello(@PathVariable("name") name: String) = helloService.getHello(name)
 
 }
