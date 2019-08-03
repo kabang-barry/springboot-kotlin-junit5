@@ -23,7 +23,7 @@ class HelloControllerRestTemplateTest(
 
         assertNotNull(result)
         assertEquals(HttpStatus.OK, result?.statusCode)
-        assertEquals(result?.body, Hello(1L, "Hello, jeonguk"))
+        assertEquals(result?.body, Hello(1L, "Hello jeonguk"))
     }
 
     @Test

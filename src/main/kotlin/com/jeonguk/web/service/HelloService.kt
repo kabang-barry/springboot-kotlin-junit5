@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 class HelloService {
 
     fun getHelloBody(id: Long, name: String): Hello {
-        return Hello(id, name)
+        return Hello(id, "Hello $name")
     }
 
     fun getHello(name: String): String {
