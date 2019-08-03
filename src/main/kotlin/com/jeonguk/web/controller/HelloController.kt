@@ -15,7 +15,7 @@ class HelloController(
 ) {
 
     @GetMapping("/hello/{name}")
-    fun greeting(@PathVariable("name") name: String): Hello = Hello(1L, "Hello, $name")
+    fun greeting(@PathVariable("name") name: String): Hello = helloService.getHelloBody(1L, name)
 
     @GetMapping("/name/{name}")
     fun hello(@PathVariable("name") name: String) = helloService.getHello(name)
