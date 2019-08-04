@@ -1,4 +1,4 @@
-package com.jeonguk.web
+package com.jeonguk.web.config
 
 import com.zaxxer.hikari.HikariDataSource
 import org.springframework.boot.context.properties.ConfigurationProperties
