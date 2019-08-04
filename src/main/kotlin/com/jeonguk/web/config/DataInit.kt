@@ -32,8 +32,8 @@ class DataInit {
         ))
 
         bookRepository.save(Book(
-                title = "L'assassin Royal",
-                publication = LocalDate.parse("1998-12-17"),
+                title = "Spring Boot",
+                publication = LocalDate.parse("2019-09-17"),
                 author = robinHobb
         ))
     }
