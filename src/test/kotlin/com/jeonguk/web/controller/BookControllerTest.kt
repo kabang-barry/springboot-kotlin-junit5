@@ -59,7 +59,6 @@ class BookControllerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun `when Called then Should Return Book`() {
         // Geven
         `when`(bookService.getBook(eq(1L)))
