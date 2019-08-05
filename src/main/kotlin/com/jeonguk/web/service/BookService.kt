@@ -58,8 +58,9 @@ class BookService {
     }
 
     @Transactional(readOnly = true)
-    fun getAuthorBooks(id: Long): List<Book> {
+    fun getAuthorBooks(id: Long): List<BookDto> {
         return bookRepository.findByAuthorId(id)
+            .map { BookDtoConverter.convert(it) }.toList()
     }
 
     @Transactional

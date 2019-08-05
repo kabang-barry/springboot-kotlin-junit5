@@ -14,8 +14,8 @@ class DataInit {
 
     @Bean
     fun init(authorRepository: AuthorRepository, bookRepository: BookRepository) = CommandLineRunner {
-        val stephenKing = Author(name = "Barry")
-        authorRepository.save(stephenKing)
+        val barry = Author(name = "Barry")
+        authorRepository.save(barry)
 
         val robinHobb = Author(name = "Allen")
         authorRepository.save(robinHobb)
@@ -23,12 +23,17 @@ class DataInit {
         bookRepository.save(Book(
                 title = "JAVA 8",
                 publication = LocalDate.parse("2019-08-01"),
-                author = stephenKing
+                author = barry
         ))
         bookRepository.save(Book(
                 title = "Kotlin",
                 publication = LocalDate.parse("2019-08-02"),
-                author = stephenKing
+                author = barry
+        ))
+        bookRepository.save(Book(
+            title = "Golang",
+            publication = LocalDate.parse("2019-08-03"),
+            author = barry
         ))
 
         bookRepository.save(Book(
