@@ -20,11 +20,15 @@ import javax.sql.DataSource
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = ["com.jeonguk.web.repository"])
+@EnableJpaRepositories(
+    basePackages = ["com.jeonguk.web.repository"],
+    entityManagerFactoryRef = "entityManager",
+    transactionManagerRef = "transactionManager"
+)
 class JpaConfig(private val env: Environment) {
 
     @Bean
-    fun entityManagerFactory(): LocalContainerEntityManagerFactoryBean {
+    fun entityManager(): LocalContainerEntityManagerFactoryBean {
         val vendorAdapter = HibernateJpaVendorAdapter()
         vendorAdapter.setDatabase(Database.H2)
         vendorAdapter.setGenerateDdl(true)
