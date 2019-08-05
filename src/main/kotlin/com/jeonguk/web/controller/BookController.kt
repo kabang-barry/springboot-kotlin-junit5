@@ -6,6 +6,7 @@ import com.jeonguk.web.util.PageDto
 import com.jeonguk.web.util.PaginationDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api")
@@ -18,7 +19,10 @@ class BookController {
     fun getBook(@PathVariable("id") id: Long) = bookService.getBook(id)
 
     @GetMapping("/books")
-    fun getBooks(pagination: PaginationDto): PageDto<BookDto> = bookService.getBooks(pagination)
+    fun getBooks(@Valid pagination: PaginationDto): PageDto<BookDto> = bookService.getBooks(pagination)
+
+    @GetMapping("/author/books/{id}")
+    fun getAuthorBooks(@PathVariable("id") id: Long) = bookService.getAuthorBooks(id)
 
     @PostMapping("/books")
     fun createBook(dto: BookDto): Long? = bookService.createBook(dto)

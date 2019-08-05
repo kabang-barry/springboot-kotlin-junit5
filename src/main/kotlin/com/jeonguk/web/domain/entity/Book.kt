@@ -11,6 +11,7 @@ data class Book(
         var id: Long? = null,
         var title: String? = null,
         var publication: LocalDate? = null,
-        @ManyToOne
+        @ManyToOne(targetEntity = Author::class, fetch = FetchType.LAZY)
+        @JoinColumn(name = "author_id")
         var author: Author? = null
 )
