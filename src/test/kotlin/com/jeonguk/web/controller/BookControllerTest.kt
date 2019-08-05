@@ -1,5 +1,6 @@
 package com.jeonguk.web.controller
 
+import com.jeonguk.web.Application
 import com.jeonguk.web.domain.dto.BookDto
 import com.jeonguk.web.domain.dto.converter.BookDtoConverter
 import com.jeonguk.web.domain.entity.Author
@@ -7,6 +8,7 @@ import com.jeonguk.web.domain.entity.Book
 import com.jeonguk.web.service.BookService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mockito.`when`
 import org.slf4j.LoggerFactory
@@ -16,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.ApplicationContext
 import org.springframework.http.MediaType
+import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -25,7 +28,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDate
 import java.util.*
 
-@SpringBootTest
+@ExtendWith(SpringExtension::class)
+@SpringBootTest(classes = [Application::class])
 @AutoConfigureMockMvc
 class BookControllerTest {
 

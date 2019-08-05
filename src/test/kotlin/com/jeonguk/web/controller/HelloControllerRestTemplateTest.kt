@@ -1,5 +1,6 @@
 package com.jeonguk.web.controller
 
+import com.jeonguk.web.Application
 import com.jeonguk.web.domain.dto.Hello
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -12,7 +13,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = [Application::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class HelloControllerRestTemplateTest(
         @Autowired private val testRestTemplate: TestRestTemplate
 ) {
