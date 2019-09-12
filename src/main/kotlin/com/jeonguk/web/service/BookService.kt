@@ -68,24 +68,25 @@ class BookService {
 
         val authorId = dto.authorId ?: throw BadRequestException("Author id must not be null")
 
-        val author = authorRepository.findById(authorId).orElse(null)
+        val findAuthor = authorRepository.findById(authorId).orElse(null)
                 ?: throw BadRequestException("Author ${dto.authorId} does not exist")
 
-        val book = Book()
-        book.title = dto.title
-        book.publication = dto.publication
-        book.author = author
+        val book = Book().apply {
+            title = dto.title
+            publication = dto.publication
+            author = findAuthor
+        }
+
         return bookRepository.save(book).id
     }
 
     @Transactional
     fun updateBook(id: Long, dto: BookDto) {
 
-        val book = bookRepository.findById(id).orElse(null)
-                ?: throw ResourceNotFoundException("Book $id does not exist")
-
-        book.title = dto.title
-        book.publication = dto.publication
+        val book = bookRepository.findById(id).orElse(null).apply {
+            title = dto.title
+            publication = dto.publication
+        }?: throw ResourceNotFoundException("Book $id does not exist")
 
         if (dto.authorId != null && dto.authorId == book.author?.id) {
             val author = authorRepository.findById(dto.authorId!!).orElse(null)
