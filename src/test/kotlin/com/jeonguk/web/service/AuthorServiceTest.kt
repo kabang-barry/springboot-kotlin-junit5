@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.springframework.test.context.junit.jupiter.SpringExtension
+import java.util.*
 
 @ExtendWith(SpringExtension::class)
 class AuthorServiceTest {
@@ -18,6 +19,27 @@ class AuthorServiceTest {
 
     @Mock
     private lateinit var authorRepository: AuthorRepository
+
+    @Test
+    fun `Author 조회 테스트`() {
+
+        val findAuthorId = 1L
+
+        // given
+        val author = Author()
+        author.id = 1L
+        author.name = "jeonguk"
+
+        given(authorRepository.findById(1L)).willReturn(Optional.of(author))
+
+        // when
+        val findAuthor = authorService.getAuthor(findAuthorId)
+
+        // then
+        assertEquals(1L, findAuthor.id)
+        assertEquals("jeonguk", findAuthor.name)
+
+    }
 
     @Test
     fun `모든 author를 가져오는 서비스 메소드 테스트`() {

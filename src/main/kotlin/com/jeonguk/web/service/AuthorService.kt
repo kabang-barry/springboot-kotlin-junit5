@@ -11,7 +11,9 @@ class AuthorService {
     @Autowired
     private lateinit var authorRepository: AuthorRepository
 
-    fun getAuthor(id: Long) = authorRepository.findById(id)
+    fun getAuthor(id: Long): Author {
+        return authorRepository.findById(id).map { it }.orElse(null)
+    }
 
     fun getAuthors(): List<Author> = authorRepository.findAll()
 
