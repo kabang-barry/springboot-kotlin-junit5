@@ -48,45 +48,48 @@ class BookControllerTest {
     fun printApplicationContext() {
         log.info("beanDefinitionNames print start ===========================")
         Arrays.stream(applicationContext.beanDefinitionNames)
-                .map {name -> applicationContext.getBean(name).javaClass.name}
-                .sorted()
-                .forEach { log.info(it) }
+            .map { name -> applicationContext.getBean(name).javaClass.name }
+            .sorted()
+            .forEach { log.info(it) }
         log.info("beanDefinitionNames print end ==============================")
     }
 
     @Test
     fun `api hello GET should returns 200`() {
-        mockMvc.perform(get("/api/books/1")
-                        .contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(
+            get("/api/books/1")
+                .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk)
-                .andDo(print())
+            .andDo(print())
     }
 
     @Test
     fun `when Called then Should Return Book`() {
         // Geven
         `when`(bookService.getBook(eq(1L)))
-                .thenReturn(expectedBook())
+            .thenReturn(expectedBook())
 
         // when
-        val actions = mockMvc.perform(MockMvcRequestBuilders.get("/api/books/1")
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andDo(print())
+        val actions = mockMvc.perform(
+            get("/api/books/1")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+        )
+            .andDo(print())
 
         // then
         actions
-                .andExpect(status().isOk)
-                .andExpect(MockMvcResultMatchers.jsonPath("id").value(1L))
-                .andExpect(MockMvcResultMatchers.jsonPath("title").value("Kotlin"))
+            .andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("id").value(1L))
+            .andExpect(MockMvcResultMatchers.jsonPath("title").value("Kotlin"))
     }
 
-    fun expectedBook() : BookDto {
+    fun expectedBook(): BookDto {
         val author = Author(id = 1L, name = "jeonguk")
         val book = Book(
-                id = 1L,
-                title = "Kotlin",
-                publication = LocalDate.parse("2019-08-05"),
-                author = author
+            id = 1L,
+            title = "Kotlin",
+            publication = LocalDate.parse("2019-08-05"),
+            author = author
         )
         return BookDtoConverter.convert(book)
     }

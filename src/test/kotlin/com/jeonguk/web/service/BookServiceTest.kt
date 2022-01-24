@@ -30,8 +30,10 @@ class BookServiceTest {
 
     @Mock
     private lateinit var authorRepository: AuthorRepository
+
     @Mock
     private lateinit var bookRepository: BookRepository
+
     @InjectMocks
     private lateinit var bookService: BookService
 

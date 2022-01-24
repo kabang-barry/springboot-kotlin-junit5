@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @SpringBootTest(classes = [Application::class])
 @AutoConfigureMockMvc
 class HelloControllerMockitoTest(
-        @Autowired private val mockMvc: MockMvc
+    @Autowired private val mockMvc: MockMvc
 ) {
 
     @MockBean
@@ -45,11 +45,13 @@ class HelloControllerMockitoTest(
     fun `when Called then Should Return Hello With Parameter Name`() {
         val body = "Hello jeonguk"
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/name/jeonguk")
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/api/name/jeonguk")
                 .contentType(MediaType.TEXT_PLAIN)
-                .content(body))
-                .andExpect(MockMvcResultMatchers.status().isOk)
-                .andDo(MockMvcResultHandlers.print())
+                .content(body)
+        )
+            .andExpect(status().isOk)
+            .andDo(MockMvcResultHandlers.print())
     }
 
     /**
@@ -64,14 +66,16 @@ class HelloControllerMockitoTest(
         given(helloService.getHelloBody(1L, "jeonguk")).willReturn(body)
 
         // when
-        val actions = mockMvc.perform(MockMvcRequestBuilders.get("/api/hello/jeonguk")
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andDo(MockMvcResultHandlers.print())
+        val actions = mockMvc.perform(
+            MockMvcRequestBuilders.get("/api/hello/jeonguk")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+        )
+            .andDo(MockMvcResultHandlers.print())
         // then
         actions
-                .andExpect(status().isOk)
-                .andExpect(jsonPath("id").value(1L))
-                .andExpect(jsonPath("name").value("jeonguk"))
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("id").value(1L))
+            .andExpect(jsonPath("name").value("jeonguk"))
     }
 
 }

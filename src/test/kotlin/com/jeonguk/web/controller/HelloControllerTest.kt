@@ -14,16 +14,16 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 @SpringBootTest(classes = [Application::class])
 @AutoConfigureMockMvc
 class HelloControllerTest(
-        @Autowired private val mockMvc: MockMvc
+    @Autowired private val mockMvc: MockMvc
 ) {
 
     @Test
     fun `api hello GET should returns 200`() {
         mockMvc.perform(
-                get("/api/hello/jeonguk")
-                        .contentType(MediaType.APPLICATION_JSON)
+            get("/api/hello/jeonguk")
+                .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isOk)
-                .andDo(print())
+            .andDo(print())
     }
 
 }

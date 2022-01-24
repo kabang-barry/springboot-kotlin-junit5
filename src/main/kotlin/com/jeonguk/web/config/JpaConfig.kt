@@ -29,15 +29,16 @@ class JpaConfig(private val env: Environment) {
 
     @Bean
     fun entityManager(): LocalContainerEntityManagerFactoryBean {
-        val vendorAdapter = HibernateJpaVendorAdapter()
-        vendorAdapter.setDatabase(Database.H2)
-        vendorAdapter.setGenerateDdl(true)
-        val em = LocalContainerEntityManagerFactoryBean()
-        em.dataSource = dataSource()
-        em.setPackagesToScan("com.jeonguk.web.domain.entity")
-        em.jpaVendorAdapter = vendorAdapter
-        em.setJpaProperties(additionalProperties())
-        return em
+        val vendorAdapter = HibernateJpaVendorAdapter().apply {
+            setDatabase(Database.H2)
+            setGenerateDdl(true)
+        }
+        return LocalContainerEntityManagerFactoryBean().apply {
+            dataSource = dataSource()
+            setPackagesToScan("com.jeonguk.web.domain.entity")
+            jpaVendorAdapter = vendorAdapter
+            setJpaProperties(additionalProperties())
+        }
     }
 
     @Bean
@@ -48,9 +49,9 @@ class JpaConfig(private val env: Environment) {
 
     @Bean
     fun transactionManager(emf: EntityManagerFactory): PlatformTransactionManager {
-        val transactionManager = JpaTransactionManager()
-        transactionManager.entityManagerFactory = emf
-        return transactionManager
+        return JpaTransactionManager().apply {
+            entityManagerFactory = emf
+        }
     }
 
     @Bean
@@ -59,13 +60,16 @@ class JpaConfig(private val env: Environment) {
     }
 
     private fun additionalProperties(): Properties {
-        val properties = Properties()
-        properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"))
-        properties.setProperty("hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect"))
-        properties.setProperty("hibernate.current_session_context_class", env.getProperty("spring.jpa.properties.hibernate.current_session_context_class"))
-        properties.setProperty("hibernate.show_sql", env.getProperty("spring.jpa.show-sql"))
-        properties.setProperty("hibernate.format_sql", env.getProperty("spring.jpa.properties.hibernate.format_sql"))
-        return properties
+        return Properties().apply {
+            setProperty("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"))
+            setProperty("hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect"))
+            setProperty(
+                "hibernate.current_session_context_class",
+                env.getProperty("spring.jpa.properties.hibernate.current_session_context_class")
+            )
+            setProperty("hibernate.show_sql", env.getProperty("spring.jpa.show-sql"))
+            setProperty("hibernate.format_sql", env.getProperty("spring.jpa.properties.hibernate.format_sql"))
+        }
     }
 
 }

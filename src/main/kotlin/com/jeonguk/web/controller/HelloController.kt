@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api")
 class HelloController(
-        @Autowired private val helloService: HelloService
+    @Autowired private val helloService: HelloService
 ) {
 
     @GetMapping("/hello/{name}")

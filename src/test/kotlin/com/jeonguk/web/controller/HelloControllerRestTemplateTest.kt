@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(classes = [Application::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class HelloControllerRestTemplateTest(
-        @Autowired private val testRestTemplate: TestRestTemplate
+    @Autowired private val testRestTemplate: TestRestTemplate
 ) {
 
     @Test

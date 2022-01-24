@@ -46,9 +46,9 @@ class BookService {
     @Transactional(readOnly = true)
     fun getBook(id: Long): BookDto {
         return bookRepository.findById(id)
-                .map { BookDtoConverter.convert(it) }
-                .orElse(null)
-                ?: throw ResourceNotFoundException("Book $id does not exist")
+            .map { BookDtoConverter.convert(it) }
+            .orElse(null)
+            ?: throw ResourceNotFoundException("Book $id does not exist")
     }
 
     @Transactional(readOnly = true)
@@ -69,7 +69,7 @@ class BookService {
         val authorId = dto.authorId ?: throw BadRequestException("Author id must not be null")
 
         val findAuthor = authorRepository.findById(authorId).orElse(null)
-                ?: throw BadRequestException("Author ${dto.authorId} does not exist")
+            ?: throw BadRequestException("Author ${dto.authorId} does not exist")
 
         val book = Book().apply {
             title = dto.title
@@ -86,11 +86,11 @@ class BookService {
         val book = bookRepository.findById(id).orElse(null).apply {
             title = dto.title
             publication = dto.publication
-        }?: throw ResourceNotFoundException("Book $id does not exist")
+        } ?: throw ResourceNotFoundException("Book $id does not exist")
 
         if (dto.authorId != null && dto.authorId == book.author?.id) {
             val author = authorRepository.findById(dto.authorId!!).orElse(null)
-                    ?: throw BadRequestException("Author $id does not exist")
+                ?: throw BadRequestException("Author $id does not exist")
             book.author = author
         }
 
@@ -100,7 +100,7 @@ class BookService {
     @Transactional
     fun deleteBook(id: Long) {
         val book = bookRepository.findById(id).orElse(null)
-                ?: throw ResourceNotFoundException("Book $id does not exist")
+            ?: throw ResourceNotFoundException("Book $id does not exist")
         bookRepository.delete(book)
     }
 

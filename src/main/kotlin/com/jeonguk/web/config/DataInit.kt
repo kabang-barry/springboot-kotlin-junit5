@@ -20,27 +20,35 @@ class DataInit {
         val robinHobb = Author(name = "Allen")
         authorRepository.save(robinHobb)
 
-        bookRepository.save(Book(
+        bookRepository.save(
+            Book(
                 title = "JAVA 8",
                 publication = LocalDate.parse("2019-08-01"),
                 author = barry
-        ))
-        bookRepository.save(Book(
+            )
+        )
+        bookRepository.save(
+            Book(
                 title = "Kotlin",
                 publication = LocalDate.parse("2019-08-02"),
                 author = barry
-        ))
-        bookRepository.save(Book(
-            title = "Golang",
-            publication = LocalDate.parse("2019-08-03"),
-            author = barry
-        ))
+            )
+        )
+        bookRepository.save(
+            Book(
+                title = "Golang",
+                publication = LocalDate.parse("2019-08-03"),
+                author = barry
+            )
+        )
 
-        bookRepository.save(Book(
+        bookRepository.save(
+            Book(
                 title = "Spring Boot",
                 publication = LocalDate.parse("2019-09-17"),
                 author = robinHobb
-        ))
+            )
+        )
     }
 
 }

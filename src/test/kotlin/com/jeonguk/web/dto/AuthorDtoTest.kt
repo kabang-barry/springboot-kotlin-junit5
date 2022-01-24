@@ -33,7 +33,7 @@ class AuthorDtoTest {
          */
         with(authorDto) {
             log.info("with ===================")
-            log.info("id {}",id)
+            log.info("id {}", id)
             log.info("name {}", name)
         }
 
@@ -55,7 +55,7 @@ class AuthorDtoTest {
          * Nullable 객체를 다른 Nullable 객체로 변환하는 경우.
          * 단일 지역 변수의 범위를 제한 하는 경우.
          */
-        val nullableAuthorLet = getNullableAuthor()?.let {
+        val nullableAuthorLet = getNullableAuthor().let {
             log.info("let ===================")
             // null 이 아닐때만 실행됩니다.
             log.info("author id {}", it.id)
@@ -68,7 +68,7 @@ class AuthorDtoTest {
         return AuthorDto(1L, "jeonguk")
     }
 
-    private fun getNullableAuthor(): AuthorDto? {
+    private fun getNullableAuthor(): AuthorDto {
         return AuthorDto(1L, "jeonguk")
     }
 
